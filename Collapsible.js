@@ -14,6 +14,7 @@ export default class Collapsible extends Component {
     duration: PropTypes.number,
     easing: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     style: ViewPropTypes.style,
+    onAnimationStart: PropTypes.func,
     onAnimationEnd: PropTypes.func,
     children: PropTypes.node,
   };
@@ -26,6 +27,7 @@ export default class Collapsible extends Component {
     duration: 300,
     easing: 'easeOutCubic',
     onAnimationEnd: () => null,
+    onAnimationStart: (height) => null,
   };
 
   constructor(props) {
@@ -117,6 +119,8 @@ export default class Collapsible extends Component {
   }
 
   _transitionToHeight(height) {
+    this.props.onAnimationStart(height);
+    
     const { duration } = this.props;
     let easing = this.props.easing;
     if (typeof easing === 'string') {
